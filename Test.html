@@ -4,16 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>convertImageToDataUrl</title>
 </head>
 
 <body>
     <script>
+        // https://segmentfault.com/a/1190000021589573
         let img = new Image();
-        img.src = 'https://lh3.googleusercontent.com/proxy/HJ5dP8ZUmJK-WqqlxuRUyvh2xenkR3nItH9zBgg-yOQLPWrSoW9GzcLw8vVxmpLI_yCvToXLpZrMvf04sORXEDtGv9A'
+        // img.src = 'https://lh3.googleusercontent.com/proxy/HJ5dP8ZUmJK-WqqlxuRUyvh2xenkR3nItH9zBgg-yOQLPWrSoW9GzcLw8vVxmpLI_yCvToXLpZrMvf04sORXEDtGv9A'
+        // img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmZMuOWiVJm9ip3eMTu9QT07vq5fXoZQxjKw&usqp=CAU'
         // img.src = '/Users/dendi/Desktop/ams/readme-images/vim.png'
-        img.setAttribute("crossOrigin", 'Anonymous');
+        img.src = 'file:///d:/Test/convertImgToDataUrl/test.png'
+        // img.setAttribute("crossOrigin", 'Anonymous');
         img.onload = () => {
             console.log(img.width, img.height, 'w, h')
             const base64Img = convertImageToCanvas(img)
@@ -29,6 +32,10 @@
             const quality = 0.8;    // 压缩系数0-1之间
             // 坐标(0,0) 表示从此处开始绘制，相当于偏移。
             canvas.getContext("2d").drawImage(img, 0, 0);
+            // let hiBlob = new Blob([`<h1>Hi gauseen!<h1>`], { type: 'text/html' })
+            let hiBlob = new Blob([canvas], { type: 'image/png' })
+            let hiFile = new File([ hiBlob ], 'fileName', { type: 'text/html' })
+            console.log(hiFile, '909090')
             document.querySelector('body').appendChild(canvas)
             return canvas.toDataURL('image/png', quality)
         }
