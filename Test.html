@@ -1,45 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>convertImageToDataUrl</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    <form action="">
+      <input type="file" name="" id="btn_file" onchange="readURL(this)" />
+    </form>
+    <!-- <script>
+      // 参考资料： https://segmentfault.com/a/1190000021589573
+      let img = new Image();
+      // img.src = 'https://lh3.googleusercontent.com/proxy/HJ5dP8ZUmJK-WqqlxuRUyvh2xenkR3nItH9zBgg-yOQLPWrSoW9GzcLw8vVxmpLI_yCvToXLpZrMvf04sORXEDtGv9A'
+      // img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmZMuOWiVJm9ip3eMTu9QT07vq5fXoZQxjKw&usqp=CAU'
+      // img.src = '/Users/dendi/Desktop/ams/readme-images/vim.png'
+      img.src = "file:///d:/Test/convertImgToDataUrl/test.png";
+      // img.setAttribute("crossOrigin", 'Anonymous');
+      img.onload = () => {
+        console.log(img.width, img.height, "w, h");
+        const base64Img = convertImageToCanvas(img);
+        console.log(base64Img);
+      };
+
+      // 把image 转换为 canvas对象
+      function convertImageToCanvas(img) {
+        // 创建canvas DOM元素，并设置其宽高和图片一样
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        // 坐标(0,0) 表示从此处开始绘制，相当于偏移。
+        canvas.getContext("2d").drawImage(img, 0, 0);
+        // let hiBlob = new Blob([`<h1>Hi gauseen!<h1>`], { type: 'text/html' })
+        console.log(canvas, "9090");
+        let hiBlob = new Blob([canvas], { type: "image/png" });
+        let hiFile = new File([hiBlob], "HahaName.png", { type: "image/png" });
+        var reader = new FileReader();
+        reader.readAsDataURL(hiFile);
+        reader.onload = function (e) {
+          console.log(e, "e");
+          console.log(e.target.result, "7777");
+        };
+        const quality = 1; // 0-1
+        console.log(hiFile, "909090");
+        document.querySelector("body").appendChild(canvas);
+        // return canvas.toDataURL('image/png', quality)
+      }
+      function readURL(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
+        if (
+          input.files &&
+          input.files[0] &&
+          (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")
+        ) {
+          var reader = new FileReader();
+          console.log(input.files[0], "9090");
+          reader.readAsDataURL(input.files[0]);
+          reader.onload = function (e) {
+            console.log(e, "e");
+            console.log(e.target.result, "9090-00");
+          };
+        } else {
+          //  $('#img').attr('src', '/assets/no_preview.png');
+        }
+      }
+    </script> -->
     <script>
-        // https://segmentfault.com/a/1190000021589573
-        let img = new Image();
-        // img.src = 'https://lh3.googleusercontent.com/proxy/HJ5dP8ZUmJK-WqqlxuRUyvh2xenkR3nItH9zBgg-yOQLPWrSoW9GzcLw8vVxmpLI_yCvToXLpZrMvf04sORXEDtGv9A'
-        // img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmZMuOWiVJm9ip3eMTu9QT07vq5fXoZQxjKw&usqp=CAU'
-        // img.src = '/Users/dendi/Desktop/ams/readme-images/vim.png'
-        img.src = 'file:///d:/Test/convertImgToDataUrl/test.png'
-        // img.setAttribute("crossOrigin", 'Anonymous');
-        img.onload = () => {
-            console.log(img.width, img.height, 'w, h')
-            const base64Img = convertImageToCanvas(img)
-            console.log(base64Img)
+        // 43188899计算规则，4*8*8+3*8*7+1*8*6+...+9*8*1。
+      let str = "43188899";
+      function getResult(str) {
+        if (typeof str !== "string") {
+          return;
         }
-
-        // 把image 转换为 canvas对象
-        function convertImageToCanvas(img) {
-            // 创建canvas DOM元素，并设置其宽高和图片一样
-            var canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const quality = 0.8;    // 压缩系数0-1之间
-            // 坐标(0,0) 表示从此处开始绘制，相当于偏移。
-            canvas.getContext("2d").drawImage(img, 0, 0);
-            // let hiBlob = new Blob([`<h1>Hi gauseen!<h1>`], { type: 'text/html' })
-            let hiBlob = new Blob([canvas], { type: 'image/png' })
-            let hiFile = new File([ hiBlob ], 'fileName', { type: 'text/html' })
-            console.log(hiFile, '909090')
-            document.querySelector('body').appendChild(canvas)
-            return canvas.toDataURL('image/png', quality)
+        let sum = 0;
+        for (let i = 0, len = str.length; i < len; i++) {
+            sum += str.charAt(i) * 8 * ( 8 - i)
+            console.log(sum)
         }
+       return sum
+      }
+      console.log(getResult(str), 'this is result')
     </script>
-</body>
-
+  </body>
 </html>
